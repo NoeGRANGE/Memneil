@@ -38,19 +38,19 @@ async def on_message(message):
         }
         response = requests.request('POST', URL, params=params).json()
         print(response)
-        await message.channel.send(response['data']['url'])
+        await message.reply(response['data']['url'])
         return
 
     await checker(msg, message, msgTab)
 
     if msg == '!meme':
         response = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-        await message.channel.send(response)
+        await message.reply(response)
         return
 
     if msg == '!viken':
         response = '!meme'
-        await message.channel.send('https://viken.fun/')
+        await message.reply('https://viken.fun/')
         return
 
 
