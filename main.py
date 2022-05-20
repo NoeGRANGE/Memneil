@@ -44,6 +44,11 @@ async def on_message(message):
         await message.channel.send(response)
         return
 
+    if msg.endswith("wesh") or msg.endswith("wesh?") or msg.endswith("wesh ?"):
+        response = 'ALORS !?'
+        await message.channel.send(response)
+        return
+
     if msg.endswith("oui") or msg.endswith("oui?") or msg.endswith("oui ?"):
         response = 'stiti'
         await message.channel.send(response)
