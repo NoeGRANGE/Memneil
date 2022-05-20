@@ -4,6 +4,8 @@ import random
 import os
 from dotenv import load_dotenv
 
+from checkers import checker
+
 # init discord bot
 client = discord.Client()
 
@@ -36,45 +38,20 @@ async def on_message(message):
         }
         response = requests.request('POST', URL, params=params).json()
         print(response)
-        await message.channel.send(response['data']['url'])
+        await message.reply(response['data']['url'])
         return
 
-    if msg.endswith("quoi") or msg.endswith("quoi?") or msg.endswith("quoi ?"):
-        response = 'feur'
-        await message.channel.send(response)
-        return
-
-    if msg.endswith("wesh") or msg.endswith("wesh?") or msg.endswith("wesh ?"):
-        response = 'ALORS !?'
-        await message.channel.send(response)
-        return
-
-    if msg.endswith("oui") or msg.endswith("oui?") or msg.endswith("oui ?"):
-        response = 'stiti'
-        await message.channel.send(response)
-        return
-
-    if msg == "ping":
-        response = 'pong'
-        await message.channel.send(response)
-        return
-
-    if msg.endswith("con") or msg.endswith("con?"):
-        response = 'fiture'
-        await message.channel.send(response)
-        return
+    await checker(msg, message, msgTab)
 
     if msg == '!meme':
         response = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-        await message.channel.send(response)
+        await message.reply(response)
         return
 
     if msg == '!viken':
         response = '!meme'
-        await message.channel.send('https://viken.fun/')
+        await message.reply('https://viken.fun/')
         return
-
-
 
 
 client.run(DISCORD_TOKEN)
