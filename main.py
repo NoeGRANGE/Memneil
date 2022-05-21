@@ -24,22 +24,6 @@ async def on_message(message):
         return
 
     msgTab = msg.split(' ')
-    if msgTab[0] == '!meme-creator' and len(msgTab) == 3:
-        data = requests.get('https://api.imgflip.com/get_memes').json()
-        URL = 'https://api.imgflip.com/caption_image'
-        i = random.randint(1, 100)
-
-        params = {
-            'username': USERNAME,
-            'password': PASSWORD,
-            'template_id': data['data']['memes'][i]['id'],
-            'text0': msgTab[1],
-            'text1': msgTab[2]
-        }
-        response = requests.request('POST', URL, params=params).json()
-        print(response)
-        await message.reply(response['data']['url'])
-        return
 
     await checker(msg, message, msgTab)
 
@@ -53,5 +37,30 @@ async def on_message(message):
         await message.reply('https://viken.fun/')
         return
 
+    if msg == '!help':
+        response = '!meme - get a random meme url\n\n' \
+                   '!meme-creator "text1" "text2" - create a random meme with 2 lalbels\n\n' \
+                   '!viken - get the URL of a strange website'
+        await message.reply(response)
+        return
+
+    msgArg = msg.split('"')
+
+    if msgTab[0] == '!meme-creator' and len(msgArg) == 5:
+        data = requests.get('https://api.imgflip.com/get_memes').json()
+        URL = 'https://api.imgflip.com/caption_image'
+        i = random.randint(1, 100)
+
+        params = {
+            'username': USERNAME,
+            'password': PASSWORD,
+            'template_id': data['data']['memes'][i]['id'],
+            'text0': msgArg[1],
+            'text1': msgArg[3]
+        }
+        response = requests.request('POST', URL, params=params).json()
+        print(response)
+        await message.reply(response['data']['url'])
+        return
 
 client.run(DISCORD_TOKEN)
